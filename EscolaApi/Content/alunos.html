@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Alunos - EscolaApi</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f5f7; color: #1f2933; margin: 0; }
+        .container { max-width: 860px; margin: 0 auto; padding: 24px 16px; }
+        h1 { font-size: 1.4rem; }
+        .filtros { display: flex; gap: 8px; margin-bottom: 16px; }
+        .filtros input { flex: 1; padding: 8px 10px; border: 1px solid #cbd2d9; border-radius: 6px; }
+        table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e4e7eb; }
+        th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #e4e7eb; font-size: 0.9rem; }
+        th { background: #f8f9fa; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.03em; }
+        .paginacao { display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 16px; }
+        .paginacao button { padding: 6px 12px; border: 1px solid #cbd2d9; border-radius: 6px; background: #fff; cursor: pointer; }
+        .paginacao button:disabled { opacity: 0.5; cursor: not-allowed; }
+        #status { padding: 16px; text-align: center; color: #52606d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Alunos</h1>
+        <div class="filtros">
+            <input id="busca" type="search" placeholder="Buscar por nome..." />
+        </div>
+        <table>
+            <thead>
+                <tr><th>Nome</th><th>E-mail</th><th>Nascimento</th></tr>
+            </thead>
+            <tbody id="lista"></tbody>
+        </table>
+        <div id="status"></div>
+        <div class="paginacao">
+            <button id="anterior" type="button">&lsaquo; Anterior</button>
+            <span id="info"></span>
+            <button id="proxima" type="button">Pr&oacute;xima &rsaquo;</button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        (function () {
+            var pagina = 1;
+            var tamanhoPagina = 5;
+            var timerBusca = null;
+
+            function carregar() {
+                $('#status').text('Carregando...');
+                $('#lista').empty();
+
+                $.getJSON('/api/alunos', {
+                    nome: $('#busca').val() || null,
+                    pagina: pagina,
+                    tamanhoPagina: tamanhoPagina
+                }).done(function (resultado) {
+                    var totalPaginas = Math.max(1, Math.ceil(resultado.total / tamanhoPagina));
+
+                    if (resultado.itens.length === 0) {
+                        $('#status').text('Nenhum aluno encontrado.');
+                    } else {
+                        $('#status').text('');
+                        $.each(resultado.itens, function (_, aluno) {
+                            var nascimento = new Date(aluno.dataNascimento)
+                                .toLocaleDateString('pt-BR');
+                            $('#lista').append(
+                                $('<tr>')
+                                    .append($('<td>').text(aluno.nome))
+                                    .append($('<td>').text(aluno.email))
+                                    .append($('<td>').text(nascimento))
+                            );
+                        });
+                    }
+
+                    $('#info').text('Página ' + pagina + ' de ' + totalPaginas +
+                        ' · ' + resultado.total + ' registro(s)');
+                    $('#anterior').prop('disabled', pagina <= 1);
+                    $('#proxima').prop('disabled', pagina >= totalPaginas);
+                }).fail(function () {
+                    $('#status').text('Erro ao carregar os alunos. A API está no ar?');
+                });
+            }
+
+            $('#busca').on('input', function () {
+                clearTimeout(timerBusca);
+                timerBusca = setTimeout(function () {
+                    pagina = 1;
+                    carregar();
+                }, 400);
+            });
+
+            $('#anterior').on('click', function () { pagina--; carregar(); });
+            $('#proxima').on('click', function () { pagina++; carregar(); });
+
+            carregar();
+        })();
+    </script>
+</body>
+</html>

@@ -38,8 +38,10 @@
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="Microsoft.AspNet.WebApi" Version="5.3.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.WebHost" Version="5.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Swashbuckle.Core" Version="5.6.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -54,6 +56,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AlunosController.cs" />
     <Compile Include="Controllers\HealthController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MatriculasController.cs" />
     <Compile Include="Controllers\RelatoriosController.cs" />
     <Compile Include="Controllers\TurmasController.cs" />
@@ -62,6 +65,12 @@
     <Compile Include="Infrastructure\Cache\MemoryCacheProvider.cs" />
     <Compile Include="Models\Requests\AlunoRequest.cs" />
     <Compile Include="Models\Requests\MatriculaRequest.cs" />
+    <Compile Include="Services\AlunoService.cs" />
+    <Compile Include="Services\IAlunoService.cs" />
+    <Compile Include="Services\IMatriculaService.cs" />
+    <Compile Include="Services\ITurmaService.cs" />
+    <Compile Include="Services\MatriculaService.cs" />
+    <Compile Include="Services\TurmaService.cs" />
     <Compile Include="Exceptions\RecursoNaoEncontradoException.cs" />
     <Compile Include="Exceptions\RegraDeNegocioException.cs" />
     <Compile Include="Exceptions\RequisicaoInvalidaException.cs" />
@@ -82,14 +91,9 @@
     <Compile Include="Repositories\ITurmaRepository.cs" />
     <Compile Include="Repositories\MatriculaRepository.cs" />
     <Compile Include="Repositories\TurmaRepository.cs" />
-    <Compile Include="Services\AlunoService.cs" />
-    <Compile Include="Services\IAlunoService.cs" />
-    <Compile Include="Services\IMatriculaService.cs" />
-    <Compile Include="Services\MatriculaService.cs" />
-    <Compile Include="Services\ITurmaService.cs" />
-    <Compile Include="Services\TurmaService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\alunos.html" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>

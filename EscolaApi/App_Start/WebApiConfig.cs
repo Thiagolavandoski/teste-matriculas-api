@@ -1,6 +1,7 @@
 using System.Web.Http;
 using EscolaApi.Infrastructure;
 using Newtonsoft.Json.Serialization;
+using Swashbuckle.Application;
 
 namespace EscolaApi
 {
@@ -9,6 +10,10 @@ namespace EscolaApi
         public static void Register(HttpConfiguration config)
         {
             config.Filters.Add(new ApiExceptionFilter());
+
+            config
+                .EnableSwagger(c => c.SingleApiVersion("v1", "EscolaApi - Controle de Matrículas"))
+                .EnableSwaggerUi();
 
             config.MapHttpAttributeRoutes();
 
