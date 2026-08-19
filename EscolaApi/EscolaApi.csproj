@@ -36,13 +36,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="Microsoft.AspNet.WebApi" Version="5.3.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.WebHost" Version="5.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,10 +53,31 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HealthController.cs" />
+    <Compile Include="Infrastructure\ApiExceptionFilter.cs" />
+    <Compile Include="Infrastructure\Cache\ICacheProvider.cs" />
+    <Compile Include="Infrastructure\Cache\MemoryCacheProvider.cs" />
+    <Compile Include="Models\Requests\AlunoRequest.cs" />
+    <Compile Include="Models\Requests\MatriculaRequest.cs" />
+    <Compile Include="Exceptions\RecursoNaoEncontradoException.cs" />
+    <Compile Include="Exceptions\RegraDeNegocioException.cs" />
+    <Compile Include="Exceptions\RequisicaoInvalidaException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\DbConnectionFactory.cs" />
+    <Compile Include="Infrastructure\IDbConnectionFactory.cs" />
+    <Compile Include="Models\Aluno.cs" />
+    <Compile Include="Models\AlunosPorTurmaItem.cs" />
+    <Compile Include="Models\Matricula.cs" />
+    <Compile Include="Models\PagedResult.cs" />
+    <Compile Include="Models\Turma.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AlunoRepository.cs" />
+    <Compile Include="Repositories\IAlunoRepository.cs" />
+    <Compile Include="Repositories\IMatriculaRepository.cs" />
+    <Compile Include="Repositories\ITurmaRepository.cs" />
+    <Compile Include="Repositories\MatriculaRepository.cs" />
+    <Compile Include="Repositories\TurmaRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />

@@ -1,4 +1,5 @@
 using System.Web.Http;
+using EscolaApi.Infrastructure;
 using Newtonsoft.Json.Serialization;
 
 namespace EscolaApi
@@ -7,6 +8,8 @@ namespace EscolaApi
     {
         public static void Register(HttpConfiguration config)
         {
+            config.Filters.Add(new ApiExceptionFilter());
+
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
