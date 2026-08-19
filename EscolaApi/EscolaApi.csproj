@@ -54,6 +54,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AlunosController.cs" />
     <Compile Include="Controllers\HealthController.cs" />
+    <Compile Include="Controllers\MatriculasController.cs" />
+    <Compile Include="Controllers\RelatoriosController.cs" />
     <Compile Include="Controllers\TurmasController.cs" />
     <Compile Include="Infrastructure\ApiExceptionFilter.cs" />
     <Compile Include="Infrastructure\Cache\ICacheProvider.cs" />
@@ -82,6 +84,8 @@
     <Compile Include="Repositories\TurmaRepository.cs" />
     <Compile Include="Services\AlunoService.cs" />
     <Compile Include="Services\IAlunoService.cs" />
+    <Compile Include="Services\IMatriculaService.cs" />
+    <Compile Include="Services\MatriculaService.cs" />
     <Compile Include="Services\ITurmaService.cs" />
     <Compile Include="Services\TurmaService.cs" />
   </ItemGroup>
